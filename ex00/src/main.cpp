@@ -18,35 +18,57 @@
 #include <iomanip>
 #include <iostream>
 
+void PrintResult(Option<char> *char_ptr) {
+  std::cout << "char: ";
+  if (char_ptr->IsSome()) {
+    char c = char_ptr->Unwrap();
+    if (c < ' ' || c > '~') {
+      std::cout << "Non displayable" << std::endl;
+      return;
+    }
+    std::cout << '\'' << c << '\'' << std::endl;
+    return;
+  }
+  std::cout << "impossible" << std::endl;
+}
+
+void PrintResult(Option<int> *int_ptr) {
+  std::cout << "int: ";
+  if (int_ptr->IsSome()) {
+    std::cout << int_ptr->Unwrap() << std::endl;
+    return;
+  }
+  std::cout << "impossible" << std::endl;
+}
+
+void PrintResult(Option<float> *float_ptr) {
+  std::cout << "float: ";
+  if (float_ptr->IsSome()) {
+    std::cout << float_ptr->Unwrap() << 'f' << std::endl;
+    return;
+  }
+  std::cout << "impossible" << std::endl;
+}
+
+void PrintResult(Option<double> *double_ptr) {
+  std::cout << "double: ";
+  if (double_ptr->IsSome()) {
+    std::cout << double_ptr->Unwrap() << std::endl;
+    return;
+  }
+  std::cout << "impossible" << std::endl;
+}
+
 int main(int argc, char **argv) {
   if (argc != 2) {
     std::cerr << "Invalid number of arguments" << std::endl;
     return 1;
   }
   ScalarConverter::Result res = ScalarConverter::Convert(argv[1]);
-  std::cout << "char: ";
-  if (res.GetCharPtr()->IsSome()) {
-    std::cout << '\'' << res.GetCharPtr()->unwrap() << '\'' << std::endl;
-  } else {
-    std::cout << "impossible" << std::endl;
-  }
-  std::cout << "int: ";
-  if (res.GetIntPtr()->IsSome()) {
-    std::cout << res.GetIntPtr()->unwrap() << std::endl;
-  } else {
-    std::cout << "impossible" << std::endl;
-  }
-  std::cout << "float: ";
-  if (res.GetFloatPtr()->IsSome()) {
-    std::cout << std::fixed << std::setprecision(1) << res.GetDoublePtr()->unwrap() << 'f' << std::endl;
-  } else {
-    std::cout << "impossible" << std::endl;
-  }
-  std::cout << "double: ";
-  if (res.GetDoublePtr()->IsSome()) {
-    std::cout << res.GetFloatPtr()->unwrap() << std::endl;
-  } else {
-    std::cout << "impossible" << std::endl;
-  }
+  PrintResult(res.GetCharPtr());
+  PrintResult(res.GetIntPtr());
+  std::cout << std::fixed << std::setprecision(1);
+  PrintResult(res.GetFloatPtr());
+  PrintResult(res.GetDoublePtr());
   return 0;
 }

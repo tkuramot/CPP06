@@ -25,9 +25,9 @@ ScalarConverter::Result::Result(Option<char> *char_ptr, Option<int> *int_ptr,
     : char_ptr_(char_ptr), int_ptr_(int_ptr), float_ptr_(float_ptr),
       double_ptr_(double_ptr) {}
 
-ScalarConverter::Result::Result(const ScalarConverter::Result &obj) {
-  (void)obj;
-}
+ScalarConverter::Result::Result(const ScalarConverter::Result &obj)
+    : char_ptr_(obj.char_ptr_), int_ptr_(obj.int_ptr_),
+      float_ptr_(obj.float_ptr_), double_ptr_(obj.double_ptr_) {}
 
 ScalarConverter::Result::~Result() {
   delete char_ptr_;
@@ -65,9 +65,6 @@ Option<char> *ScalarConverter::ConvertStrToChar(const std::string &literal) {
   try {
     i = std::stoi(literal);
   } catch (std::exception &e) {
-    return new None<char>();
-  }
-  if (i < ' ' || i > '~') {
     return new None<char>();
   }
   return new Some<char>(static_cast<char>(i));

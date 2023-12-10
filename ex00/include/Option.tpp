@@ -15,7 +15,7 @@ public:
     return *this;
   }
 
-  virtual T unwrap() = 0;
+  virtual T Unwrap() = 0;
   virtual bool IsSome() = 0;
 };
 

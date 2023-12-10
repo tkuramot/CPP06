@@ -12,10 +12,12 @@ public:
   Some() {}
   Some(T value) : Option<T>(), value_(value) {}
   Some(const Option<T> &obj) : Option<T>(obj) { (void)obj; }
-  T unwrap() { return value_; }
-  bool IsSome() { return true; }
+
   T GetValue() const { return value_; }
   void SetValue(T value) { value_ = value; }
+
+  T Unwrap() { return value_; }
+  bool IsSome() { return true; }
 
 private:
   T value_;

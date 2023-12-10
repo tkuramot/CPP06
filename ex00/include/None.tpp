@@ -18,8 +18,7 @@ public:
     return *this;
   }
 
-private:
-  T unwrap() { throw std::runtime_error("Invalid value"); }
+  T Unwrap() { throw std::runtime_error("Invalid value"); }
   bool IsSome() { return false; }
 };
 
