@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:50:31 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/12/06 14:50:40 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/12/11 00:39:03 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #ifndef CPP06_EX00_SCALARCONVERTER_HPP_
 #define CPP06_EX00_SCALARCONVERTER_HPP_
 
-#include "Option.tpp"
+#include "Option.hpp"
 #include <string>
 
 class ScalarConverter {

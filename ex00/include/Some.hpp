@@ -5,7 +5,7 @@
 #ifndef CONVERT_EX00_SOME_HPP_
 #define CONVERT_EX00_SOME_HPP_
 
-#include "Option.tpp"
+#include "Option.hpp"
 
 template <typename T> class Some : public Option<T> {
 public:

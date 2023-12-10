@@ -5,7 +5,7 @@
 #ifndef CONVERT_EX00_NONE_HPP_
 #define CONVERT_EX00_NONE_HPP_
 
-#include "Option.tpp"
+#include "Option.hpp"
 #include <stdexcept>
 
 template <typename T> class None : public Option<T> {

@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:50:31 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/12/09 21:02:19 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/12/11 00:39:17 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 //
 
 #include "ScalarConverter.hpp"
-#include "None.tpp"
-#include "Some.tpp"
+#include "None.hpp"
+#include "Some.hpp"
 #include <string>
 
 ScalarConverter::Result::Result(Option<char> *char_ptr, Option<int> *int_ptr,
