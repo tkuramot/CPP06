@@ -13,13 +13,16 @@ public:
   None() : Option<T>() {}
   None(const Option<T> &obj) : Option<T>(obj) {}
   ~None() {}
-  None &operator=(const Option<T> &obj) {
+  None &operator=(const None<T> &obj) {
     Option<T>::operator=(obj);
     return *this;
   }
 
   T Unwrap() { throw std::runtime_error("Invalid value"); }
   bool IsSome() { return false; }
+  Option<T> *Clone() {
+    return new None();
+  }
 };
 
 #endif // CONVERT_EX00_NONE_HPP_

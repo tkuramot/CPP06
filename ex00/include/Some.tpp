@@ -11,13 +11,17 @@ template <typename T> class Some : public Option<T> {
 public:
   Some() {}
   Some(T value) : Option<T>(), value_(value) {}
-  Some(const Option<T> &obj) : Option<T>(obj) { (void)obj; }
-
-  T GetValue() const { return value_; }
-  void SetValue(T value) { value_ = value; }
+  Some(const Some<T> &obj) : Option<T>(obj), value_(obj.value_) {}
+  Some &operator=(const Some<T> &obj) {
+    value_ = obj.value_;
+    return *this;
+  }
 
   T Unwrap() { return value_; }
   bool IsSome() { return true; }
+  Option<T> *Clone() {
+    return new Some(value_);
+  }
 
 private:
   T value_;

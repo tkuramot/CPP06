@@ -25,9 +25,9 @@ ScalarConverter::Result::Result(Option<char> *char_ptr, Option<int> *int_ptr,
     : char_ptr_(char_ptr), int_ptr_(int_ptr), float_ptr_(float_ptr),
       double_ptr_(double_ptr) {}
 
-ScalarConverter::Result::Result(const ScalarConverter::Result &obj)
-    : char_ptr_(obj.char_ptr_), int_ptr_(obj.int_ptr_),
-      float_ptr_(obj.float_ptr_), double_ptr_(obj.double_ptr_) {}
+ScalarConverter::Result::Result(const ScalarConverter::Result &obj) {
+  *this = obj;
+}
 
 ScalarConverter::Result::~Result() {
   delete char_ptr_;
@@ -38,7 +38,21 @@ ScalarConverter::Result::~Result() {
 
 ScalarConverter::Result &
 ScalarConverter::Result::operator=(const ScalarConverter::Result &obj) {
-  (void)obj;
+  if (this == &obj) {
+    return *this;
+  }
+  Option<char> *temp_char_ptr = obj.char_ptr_->Clone();
+  delete char_ptr_;
+  char_ptr_ = temp_char_ptr;
+  Option<int> *temp_int_ptr = obj.int_ptr_->Clone();
+  delete int_ptr_;
+  int_ptr_ = temp_int_ptr;
+  Option<float> *temp_float_ptr = obj.float_ptr_->Clone();
+  delete float_ptr_;
+  float_ptr_ = temp_float_ptr;
+  Option<double> *temp_double_ptr = obj.double_ptr_->Clone();
+  delete double_ptr_;
+  double_ptr_ = temp_double_ptr;
   return *this;
 }
 

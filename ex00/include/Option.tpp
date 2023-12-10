@@ -17,6 +17,7 @@ public:
 
   virtual T Unwrap() = 0;
   virtual bool IsSome() = 0;
+  virtual Option<T> *Clone() = 0;
 };
 
 #endif // CONVERT_EX00_OPTION_HPP_
