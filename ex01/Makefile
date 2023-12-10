@@ -1,11 +1,13 @@
 CXX			:= c++
-CXXFLAGS	:= -g -MMD -MP -Wall -Wextra -Werror -std=c++98
+CXXFLAGS	:= -g -MMD -MP -Wall -Wextra -Werror -Wconversion -std=c++98
 DEBUG_FLAGS		:= -fsanitize=address -fsanitize=bounds
 INCLUDE		:= -I include
 NAME		:= a.out
 NAME_DEBUG	:= debug.a.out
 SRCDIR		:= src
 SRCS		:= \
+	src/Data.cpp \
+	src/Serializer.cpp \
 	src/main.cpp
 OBJDIR		:= objs
 OBJS		:= $(subst $(SRCDIR), $(OBJDIR), $(SRCS:.cpp=.o))
@@ -45,6 +47,6 @@ fclean: clean
 re: fclean all
 
 cppfile:
-	find src -name "*.cpp" | sed 's/\.\///g' | awk '{print "\t"$$0" \\"}' | sed '$$s/ \\//'
+	find src -name "*.cpp" | sed 's/\.\///g' | awk '{print "\t"$$0" \\"}' | sed '$$s/ \\//' | pbcopy
 
 -include $(DEPENDS)
