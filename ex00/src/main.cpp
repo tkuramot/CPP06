@@ -18,57 +18,69 @@
 #include <iomanip>
 #include <iostream>
 
-void PrintResult(Option<char> *char_ptr) {
+void Print(ScalarConverter::PossibleType *possible_type,
+           ScalarConverter::Result *res) {
   std::cout << "char: ";
-  if (char_ptr->IsSome()) {
-    char c = char_ptr->Unwrap();
-    if (c < ' ' || c > '~') {
+  if (possible_type->is_char->IsSome()) {
+    if (res->c < ' ' || res->c > '~') {
       std::cout << "Non displayable" << std::endl;
-      return;
+    } else {
+      std::cout << '\'' << res->c << '\'' << std::endl;
     }
-    std::cout << '\'' << c << '\'' << std::endl;
-    return;
+  } else {
+    std::cout << "impossible" << std::endl;
   }
-  std::cout << "impossible" << std::endl;
-}
-
-void PrintResult(Option<int> *int_ptr) {
   std::cout << "int: ";
-  if (int_ptr->IsSome()) {
-    std::cout << int_ptr->Unwrap() << std::endl;
-    return;
+  if (possible_type->is_int->IsSome() || possible_type->is_char->IsSome()) {
+    std::cout << res->i << std::endl;
+  } else {
+    std::cout << "impossible" << std::endl;
   }
-  std::cout << "impossible" << std::endl;
-}
-
-void PrintResult(Option<float> *float_ptr) {
   std::cout << "float: ";
-  if (float_ptr->IsSome()) {
-    std::cout << float_ptr->Unwrap() << 'f' << std::endl;
-    return;
+  std::cout << std::fixed << std::setprecision(1);
+  if (possible_type->is_float->IsSome() || possible_type->is_char->IsSome()) {
+    std::cout << res->f << 'f' << std::endl;
+  } else {
+    std::cout << "impossible" << std::endl;
   }
-  std::cout << "impossible" << std::endl;
-}
-
-void PrintResult(Option<double> *double_ptr) {
   std::cout << "double: ";
-  if (double_ptr->IsSome()) {
-    std::cout << double_ptr->Unwrap() << std::endl;
-    return;
+  if (possible_type->is_double->IsSome() || possible_type->is_char->IsSome()) {
+    std::cout << res->d << std::endl;
+  } else {
+    std::cout << "impossible" << std::endl;
   }
-  std::cout << "impossible" << std::endl;
+  std::cout << std::fixed << std::setprecision(0);
 }
 
 int main(int argc, char **argv) {
   if (argc != 2) {
-    std::cerr << "Invalid number of arguments" << std::endl;
+    std::cerr << "Usage: ./convert literal" << std::endl;
     return 1;
   }
-  ScalarConverter::Result res = ScalarConverter::Convert(argv[1]);
-  PrintResult(res.GetCharPtr());
-  PrintResult(res.GetIntPtr());
-  std::cout << std::fixed << std::setprecision(1);
-  PrintResult(res.GetFloatPtr());
-  PrintResult(res.GetDoublePtr());
+  std::string literal = std::string(argv[1]);
+  ScalarConverter::PossibleType *possible_type =
+      ScalarConverter::DetectType(literal);
+  ScalarConverter::Result *res;
+  if (possible_type->is_char->IsSome() && possible_type->is_char->Unwrap()) {
+    res = ScalarConverter::Convert(literal[1]);
+    Print(possible_type, res);
+  } else if (possible_type->is_int->IsSome() &&
+             possible_type->is_int->Unwrap()) {
+    res = ScalarConverter::Convert(std::stoi(literal));
+    Print(possible_type, res);
+  } else if (possible_type->is_float->IsSome() &&
+             possible_type->is_float->Unwrap()) {
+    res = ScalarConverter::Convert(std::stof(literal));
+    Print(possible_type, res);
+  } else if (possible_type->is_double->IsSome() &&
+             possible_type->is_double->Unwrap()) {
+    res = ScalarConverter::Convert(std::stod(literal));
+    Print(possible_type, res);
+  } else {
+    res = ScalarConverter::Convert(0);
+    Print(possible_type, res);
+  }
+  delete possible_type;
+  delete res;
   return 0;
 }

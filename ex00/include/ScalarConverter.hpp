@@ -22,29 +22,34 @@
 
 class ScalarConverter {
 public:
-  class Result {
-  public:
-    Result(Option<char> *char_ptr, Option<int> *int_ptr,
-           Option<float> *float_ptr, Option<double> *double_ptr);
-    Result(const Result &obj);
-    ~Result();
-    Result &operator=(const Result &obj);
-    Option<char> *GetCharPtr() const;
-    Option<int> *GetIntPtr() const;
-    Option<float> *GetFloatPtr() const;
-    Option<double> *GetDoublePtr() const;
-
-  private:
-    Option<char> *char_ptr_;
-    Option<int> *int_ptr_;
-    Option<float> *float_ptr_;
-    Option<double> *double_ptr_;
-  };
-  static Result Convert(const std::string &literal);
-  static Option<char> *ConvertStrToChar(const std::string &literal);
-  static Option<int> *ConvertStrToInt(const std::string &literal);
-  static Option<float> *ConvertStrToFloat(const std::string &literal);
-  static Option<double> *ConvertStrToDouble(const std::string &literal);
+  typedef struct Result {
+    char c;
+    int i;
+    float f;
+    double d;
+  } Result;
+  typedef struct PossibleType {
+    Option<bool> *is_char;
+    Option<bool> *is_int;
+    Option<bool> *is_float;
+    Option<bool> *is_double;
+    ~PossibleType();
+  } PossibleType;
+  template <typename T> static Result *Convert(T value);
+  static PossibleType *DetectType(const std::string &literal);
+  static Option<bool> *IsConvertableToChar(const std::string &literal);
+  static Option<bool> *IsConvertableToInt(const std::string &literal);
+  static Option<bool> *IsConvertableToFloat(const std::string &literal);
+  static Option<bool> *IsConvertableToDouble(const std::string &literal);
 };
+
+template <typename T> ScalarConverter::Result *ScalarConverter::Convert(T value) {
+  ScalarConverter::Result *res = new ScalarConverter::Result;
+  res->c = static_cast<char>(value);
+  res->i = static_cast<int>(value);
+  res->f = static_cast<float>(value);
+  res->d = static_cast<double>(value);
+  return res;
+}
 
 #endif // CPP06_EX00_SCALARCONVERTER_HPP_
