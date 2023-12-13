@@ -11,12 +11,12 @@
 #include <iostream>
 
 Base *Generate() {
-  int mod = rand() % 3;
+  int subclass_type = rand() % 3;
   std::cout << "Generating ";
-  if (mod == 0) {
+  if (subclass_type == 0) {
     std::cout << "A class..." << std::endl;
     return new A();
-  } else if (mod == 1) {
+  } else if (subclass_type == 1) {
     std::cout << "B class..." << std::endl;
     return new B();
   } else {

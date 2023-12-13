@@ -6,11 +6,10 @@ NAME		:= a.out
 NAME_DEBUG	:= debug.a.out
 SRCDIR		:= src
 SRCS		:= \
-	src/Form.cpp \
-	src/RobotomyRequestForm.cpp \
-	src/ShrubberyCreationForm.cpp \
-	src/Bureaucrat.cpp \
-	src/PresidentialPardonForm.cpp \
+	src/A.cpp \
+	src/C.cpp \
+	src/B.cpp \
+	src/Base.cpp \
 	src/main.cpp
 OBJDIR		:= objs
 OBJS		:= $(subst $(SRCDIR), $(OBJDIR), $(SRCS:.cpp=.o))
@@ -50,6 +49,6 @@ fclean: clean
 re: fclean all
 
 cppfile:
-	find src -name "*.cpp" | sed 's/\.\///g' | awk '{print "\t"$$0" \\"}' | sed '$$s/ \\//'
+	find src -name "*.cpp" | sed 's/\.\///g' | awk '{print "\t"$$0" \\"}' | sed '$$s/ \\//' | pbcopy
 
 -include $(DEPENDS)

@@ -22,7 +22,7 @@ void Print(ScalarConverter::PossibleType *possible_type,
            ScalarConverter::Result *res) {
   std::cout << "char: ";
   if (possible_type->is_char->IsSome()) {
-    if (res->c < ' ' || res->c > '~') {
+    if (!isprint(res->c)) {
       std::cout << "Non displayable" << std::endl;
     } else {
       std::cout << '\'' << res->c << '\'' << std::endl;

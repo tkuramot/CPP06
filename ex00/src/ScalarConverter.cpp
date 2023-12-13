@@ -47,6 +47,9 @@ Option<bool> *ScalarConverter::IsConvertableToChar(const std::string &literal) {
     return new Some<bool>(false);
   }
   if (literal.front() != '\'' || literal.back() != '\'') {
+    if (!isdigit(literal.front()) ||
+        !(isdigit(literal.back()) || literal.back() == 'f'))
+      return new None<bool>();
     return new Some<bool>(false);
   }
   return new Some<bool>(true);
