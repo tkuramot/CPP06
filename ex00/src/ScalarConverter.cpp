@@ -38,15 +38,8 @@ ScalarConverter::DetectType(const std::string &literal) {
 }
 
 Option<bool> *ScalarConverter::IsConvertableToChar(const std::string &literal) {
-  if (literal.size() != 3) {
-    try {
-      std::stoi(literal);
-    } catch (std::exception &e) {
-      return new None<bool>();
-    }
-    return new Some<bool>(false);
-  }
-  if (literal.front() == '\'' && literal.back() == '\'') {
+  if (literal.size() == 3 && literal.front() == '\'' &&
+      literal.back() == '\'') {
     return new Some<bool>(true);
   }
   try {
