@@ -46,13 +46,18 @@ Option<bool> *ScalarConverter::IsConvertableToChar(const std::string &literal) {
     }
     return new Some<bool>(false);
   }
-  if (literal.front() != '\'' || literal.back() != '\'') {
-    if (!isdigit(literal.front()) ||
-        !(isdigit(literal.back()) || literal.back() == 'f'))
-      return new None<bool>();
-    return new Some<bool>(false);
+  if (literal.front() == '\'' && literal.back() == '\'') {
+    return new Some<bool>(true);
   }
-  return new Some<bool>(true);
+  try {
+    std::stoi(literal);
+  } catch (std::exception &e) {
+    return new None<bool>();
+  }
+  if (IsNanOrInf(literal)) {
+    return new None<bool>();
+  }
+  return new Some<bool>(false);
 }
 
 Option<bool> *ScalarConverter::IsConvertableToInt(const std::string &literal) {
@@ -70,9 +75,13 @@ Option<bool> *ScalarConverter::IsConvertableToInt(const std::string &literal) {
 
 Option<bool> *
 ScalarConverter::IsConvertableToFloat(const std::string &literal) {
+  float f;
   try {
-    std::stof(literal);
+    f = std::stof(literal);
   } catch (std::exception &e) {
+    return new None<bool>();
+  }
+  if ((isnan(f) || isinf(f)) && !IsNanOrInf(literal)) {
     return new None<bool>();
   }
   if (literal.find('f') == std::string::npos) {
@@ -83,13 +92,25 @@ ScalarConverter::IsConvertableToFloat(const std::string &literal) {
 
 Option<bool> *
 ScalarConverter::IsConvertableToDouble(const std::string &literal) {
+  double d;
   try {
-    std::stof(literal);
+    d = std::stof(literal);
   } catch (std::exception &e) {
+    return new None<bool>();
+  }
+  if ((isnan(d) || isinf(d)) && !IsNanOrInf(literal)) {
     return new None<bool>();
   }
   if (literal.find('f') != std::string::npos) {
     return new Some<bool>(false);
   }
   return new Some<bool>(true);
+}
+
+bool ScalarConverter::IsNanOrInf(const std::string &literal) {
+  if (literal == "nan" || literal == "nanf" || literal == "+inf" ||
+      literal == "+inff" || literal == "-inf" || literal == "-inff") {
+    return true;
+  }
+  return false;
 }

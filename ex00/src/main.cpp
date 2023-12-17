@@ -77,6 +77,10 @@ int main(int argc, char **argv) {
     res = ScalarConverter::Convert(std::stod(literal));
     Print(possible_type, res);
   } else {
+    std::cout << "char: " << possible_type->is_char->IsSome() << std::endl;
+        std::cout << "int: " << possible_type->is_int->IsSome() << std::endl;
+        std::cout << "float: " << possible_type->is_float->IsSome() << std::endl;
+        std::cout << "double: " << possible_type->is_double->IsSome() << std::endl;
     res = ScalarConverter::Convert(0);
     Print(possible_type, res);
   }

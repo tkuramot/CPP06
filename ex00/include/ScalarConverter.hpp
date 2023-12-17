@@ -41,6 +41,12 @@ public:
   static Option<bool> *IsConvertableToInt(const std::string &literal);
   static Option<bool> *IsConvertableToFloat(const std::string &literal);
   static Option<bool> *IsConvertableToDouble(const std::string &literal);
+  static bool IsNanOrInf(const std::string &literal);
+private:
+  ScalarConverter() {}
+  ScalarConverter(const ScalarConverter &obj) { (void)obj; }
+  ~ScalarConverter() {}
+  ScalarConverter &operator=(const ScalarConverter &obj) { (void) obj; return *this; }
 };
 
 template <typename T> ScalarConverter::Result *ScalarConverter::Convert(T value) {
