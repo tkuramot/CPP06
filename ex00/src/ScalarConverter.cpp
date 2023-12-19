@@ -6,7 +6,7 @@
 /*   By: tkuramot <tkuramot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 14:50:31 by tkuramot          #+#    #+#             */
-/*   Updated: 2023/12/11 00:39:17 by tkuramot         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:50:10 by tkuramot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "ScalarConverter.hpp"
 #include "None.hpp"
 #include "Some.hpp"
+#include <cmath>
 #include <iostream>
 #include <string>
 
