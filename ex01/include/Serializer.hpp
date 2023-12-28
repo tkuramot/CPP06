@@ -24,6 +24,12 @@ class Serializer {
 public:
   static uintptr_t Serialize(Data *ptr);
   static Data *Deserialize(uintptr_t raw);
+
+private:
+  Serializer();
+  Serializer(const Serializer &obj);
+  ~Serializer();
+  Serializer &operator=(const Serializer &obj);
 };
 
 #endif // CPP06_EX01_SERIALIZER_HPP_
